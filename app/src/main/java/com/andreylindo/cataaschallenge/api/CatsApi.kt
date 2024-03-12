@@ -13,10 +13,14 @@ import retrofit2.http.Query
  * @since 3/11/24
  */
 
+private const val HAS_BREEDS_DEFAULT_VALUE = 1
+
 interface CatsApi {
 
-    @GET("api/cats")
+    @GET("v1/images/search")
     suspend fun getCats(
         @Query("limit") limit: Int,
+        @Query("page") page: Int,
+        @Query("has_breeds") hasBreeds: Int = HAS_BREEDS_DEFAULT_VALUE
     ): Response<List<CatResponse>>
 }

@@ -12,5 +12,5 @@ import com.andreylindo.cataaschallenge.model.response_model.CatResponse
  */
 interface CatsRepository {
 
-    suspend fun getCats(limit: Int): NetworkResponse<List<CatResponse>>
+    suspend fun getCats(limit: Int, page: Int): NetworkResponse<List<CatResponse>>
 }

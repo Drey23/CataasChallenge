@@ -2,6 +2,7 @@ package com.andreylindo.cataaschallenge.di
 
 import com.andreylindo.cataaschallenge.api.CatsApi
 import com.andreylindo.cataaschallenge.common.BASE_URL
+import com.andreylindo.cataaschallenge.common.TRANSLATION
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +26,16 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .build()
+            .addInterceptor { chain ->
+                val request = chain.request()
+
+                val newRequest = request.newBuilder()
+                    .addHeader("x-api-key", TRANSLATION)
+                    .addHeader("Content-Type", "application/json")
+                    .build()
+
+                chain.proceed(newRequest)
+            }.build()
     }
 
     @Provides

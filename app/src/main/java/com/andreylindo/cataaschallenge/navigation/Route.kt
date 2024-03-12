@@ -1,5 +1,8 @@
 package com.andreylindo.cataaschallenge.navigation
 
+import com.andreylindo.cataaschallenge.ui.screens.details.DETAILS_ROUTE_NAME
+import com.andreylindo.cataaschallenge.ui.screens.home.HOME_ROUTE_NAME
+
 /**
  * Copyright © 2024 CataasChallenge. All rights reserved.
  *
@@ -9,9 +12,7 @@ package com.andreylindo.cataaschallenge.navigation
  */
 sealed class Route(val routeName: String) {
 
-    data object Home : Route(routeName = "home_screen")
+    data object Home : Route(routeName = HOME_ROUTE_NAME)
 
-    data class Details(val imageUrl: String? = null) :
-        Route(routeName = imageUrl?.let { "details_screen?imageUrl=$imageUrl" }
-            ?: "details_screen")
+    data object Details : Route(routeName = DETAILS_ROUTE_NAME)
 }

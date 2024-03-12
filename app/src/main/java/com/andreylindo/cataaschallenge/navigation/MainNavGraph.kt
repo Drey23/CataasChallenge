@@ -4,12 +4,11 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import com.andreylindo.cataaschallenge.common.EMPTY_STRING
+import com.andreylindo.cataaschallenge.model.ui_model.CatUiModel
 import com.andreylindo.cataaschallenge.ui.screens.details.DetailsScreen
+import com.andreylindo.cataaschallenge.ui.screens.details.DetailsScreenParams
 import com.andreylindo.cataaschallenge.ui.screens.home.HomeScreen
 import com.andreylindo.cataaschallenge.ui.screens.home.HomeViewModel
 
@@ -21,8 +20,6 @@ import com.andreylindo.cataaschallenge.ui.screens.home.HomeViewModel
  * @since 3/11/24
  */
 
-private const val IMAGE_URL_KEY = "imageUrl"
-
 @Composable
 fun MainNavGraph(navController: NavHostController, homeViewModel: HomeViewModel) {
     val durationMillis = 250
@@ -33,16 +30,13 @@ fun MainNavGraph(navController: NavHostController, homeViewModel: HomeViewModel)
     )
     {
         composable(route = Route.Home.routeName) {
-            HomeScreen(navController, homeViewModel)
+            HomeScreen(
+                navHostController = navController,
+                homeViewModel = homeViewModel
+            )
         }
         composable(
-            route = Route.Details().routeName + "?imageUrl={$IMAGE_URL_KEY}",
-            arguments = listOf(
-                navArgument(IMAGE_URL_KEY) {
-                    type = NavType.StringType
-                    defaultValue = EMPTY_STRING
-                },
-            ),
+            route = Route.Details.routeName,
             enterTransition = {
                 return@composable slideIntoContainer(
                     AnimatedContentTransitionScope.SlideDirection.Start, tween(durationMillis)
@@ -54,8 +48,14 @@ fun MainNavGraph(navController: NavHostController, homeViewModel: HomeViewModel)
                 )
             },
         ) {
-            val imageUrl = it.arguments?.getString(IMAGE_URL_KEY).orEmpty()
-            DetailsScreen(navController, imageUrl = imageUrl)
+            val params = NavigationHelper.getParcelable(it, DetailsScreenParams::class.java)
+
+            DetailsScreen(
+                navHostController = navController,
+                params = DetailsScreenParams(
+                    catUiModel = params?.catUiModel ?: CatUiModel()
+                )
+            )
         }
     }
 }
