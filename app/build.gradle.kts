@@ -1,4 +1,3 @@
-import com.android.build.api.dsl.Packaging
 import java.util.Properties
 
 plugins {
@@ -31,7 +30,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -89,12 +88,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     debugImplementation(libs.ui.tooling)
-    debugImplementation (libs.androidx.monitor)
+    debugImplementation(libs.androidx.monitor)
     implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.mockito.core)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation (libs.androidx.core.testing)
-    androidTestImplementation (libs.mockk.android)
+    testImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.mockk.android)
     // endregion
 
     // region Retrofit for network requests

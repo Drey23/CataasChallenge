@@ -14,7 +14,3 @@ sealed class HomeState {
     data object Loading : HomeState()
     data class Error(val message: String) : HomeState()
 }
-
-sealed class HomeSideEffect {
-    data class ShowErrorMessage(val message: String) : HomeSideEffect()
-}

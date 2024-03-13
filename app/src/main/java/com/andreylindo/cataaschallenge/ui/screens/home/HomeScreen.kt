@@ -1,5 +1,6 @@
 package com.andreylindo.cataaschallenge.ui.screens.home
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -69,8 +71,17 @@ fun HomeScreen(navHostController: NavHostController, homeViewModel: HomeViewMode
             }
 
             is HomeState.Loaded -> {
+                val columns = when (LocalConfiguration.current.orientation) {
+                    Configuration.ORIENTATION_LANDSCAPE -> {
+                        4
+                    }
+                    else -> {
+                        2
+                    }
+                }
+
                 LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Fixed(2),
+                    columns = StaggeredGridCells.Fixed(columns),
                     verticalItemSpacing = 4.dp,
                     contentPadding = PaddingValues(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(4.dp),

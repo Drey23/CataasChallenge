@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
     private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {
 
-    private val _state = MutableLiveData<HomeState>()
+    private val _state = MutableLiveData<HomeState>(HomeState.Loading)
     private var page = 1
 
     val state: LiveData<HomeState>
@@ -37,8 +37,6 @@ class HomeViewModel @Inject constructor(
 
     fun getCats() {
         viewModelScope.launch {
-            _state.value = HomeState.Loading
-
             when (val response = repository.getCats(DEFAULT_LIMIT, page)) {
                 is NetworkResponse.Error -> {
                     _state.value =
