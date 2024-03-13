@@ -14,6 +14,6 @@ import javax.inject.Inject
  */
 class CatsRepositoryImpl @Inject constructor(private val api: CatsApi) : CatsRepository {
     override suspend fun getCats(limit: Int, page: Int) = safeApiCall {
-        api.getCats(10, 1)
+        api.getCats(limit, page)
     }
 }

@@ -2,4 +2,14 @@
     <string name="app_name">Cataas</string>
     <string name="back">Back</string>
     <string name="home">Home</string>
+    <string name="image_of_a_cat">Image of a cat</string>
+    <string name="details">Details</string>
+    <string name="description">Description</string>
+    <string name="breed_name">Breed Name</string>
+    <string name="temperament">Temperament</string>
+    <string name="origin">Origin</string>
+    <string name="weight">Weight</string>
+    <string name="weight_values">Imperial: %1$s\nMetric: %2$s</string>
+    <string name="could_not_get_data">Couldn\'t get data</string>
+    <string name="unexpected_error">Unexpected Error</string>
 </resources>

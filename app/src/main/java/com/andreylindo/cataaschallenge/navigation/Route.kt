@@ -1,6 +1,8 @@
 package com.andreylindo.cataaschallenge.navigation
 
+import com.andreylindo.cataaschallenge.common.PARAMS_KEY
 import com.andreylindo.cataaschallenge.ui.screens.details.DETAILS_ROUTE_NAME
+import com.andreylindo.cataaschallenge.ui.screens.details.DetailsScreenParams
 import com.andreylindo.cataaschallenge.ui.screens.home.HOME_ROUTE_NAME
 
 /**
@@ -12,7 +14,22 @@ import com.andreylindo.cataaschallenge.ui.screens.home.HOME_ROUTE_NAME
  */
 sealed class Route(val routeName: String) {
 
-    data object Home : Route(routeName = HOME_ROUTE_NAME)
+    data class Home(val params: DetailsScreenParams? = null, val forNavMap: Boolean = false) :
+        Route(
+            routeName = HOME_ROUTE_NAME
+        )
 
-    data object Details : Route(routeName = DETAILS_ROUTE_NAME)
+    data class Details(
+        val params: String? = null,
+        val forNavMap: Boolean = false,
+    ) :
+        Route(
+            routeName = if (forNavMap) {
+                "$DETAILS_ROUTE_NAME?$PARAMS_KEY={$PARAMS_KEY}"
+            } else if (params != null) {
+                "$DETAILS_ROUTE_NAME?$PARAMS_KEY=$params"
+            } else {
+                DETAILS_ROUTE_NAME
+            }
+        )
 }

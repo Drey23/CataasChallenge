@@ -1,8 +1,9 @@
 package com.andreylindo.cataaschallenge.model.ui_model
 
-import android.os.Parcelable
 import com.andreylindo.cataaschallenge.common.EMPTY_STRING
-import kotlinx.parcelize.Parcelize
+import com.andreylindo.cataaschallenge.model.response_model.BreedResponse
+import com.andreylindo.cataaschallenge.model.response_model.BreedWeightResponse
+import com.andreylindo.cataaschallenge.model.response_model.CatResponse
 
 /**
  * Copyright © 2024 CataasChallenge. All rights reserved.
@@ -11,15 +12,12 @@ import kotlinx.parcelize.Parcelize
  * @author Andrey Lindo
  * @since 3/11/24
  */
-@Parcelize
 data class CatUiModel(
     val id: String = EMPTY_STRING,
     val imageUrl: String = EMPTY_STRING,
     val breeds: List<BreedUiModel> = listOf()
-) : Parcelable
+)
 
-
-@Parcelize
 data class BreedUiModel(
     val name: String,
     val temperament: String,
@@ -28,4 +26,22 @@ data class BreedUiModel(
     val wikipediaUrl: String,
     val weightImperial: String,
     val weightMetric: String
-) : Parcelable
+)
+
+fun CatUiModel.toResponseModel() = CatResponse(
+    id = id ?: EMPTY_STRING,
+    imageUrl = imageUrl ?: EMPTY_STRING,
+    breeds = breeds.map {
+        BreedResponse(
+            name = it.name,
+            temperament = it.temperament,
+            origin = it.origin,
+            description = it.description,
+            wikipediaUrl = it.wikipediaUrl,
+            weight = BreedWeightResponse(
+                metric = it.weightMetric,
+                imperial = it.weightImperial
+            )
+        )
+    }
+)
